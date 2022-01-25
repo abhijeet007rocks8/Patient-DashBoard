@@ -1,0 +1,14 @@
+// Create Resource Group 
+az group create -l centralindia -n DashboardApp
+
+// Create container registry
+az acr create --name DashboardAppRegistry --resource-group DashboardApp --sku basic --admin-enabled true
+
+// Build docker in the container registry
+az acr build --registry DashboardAppRegistry --resource-group DashboardApp --image dashboard-app .
+
+// Create App Service for WebApp
+az appservice plan create -g DashboardApp -n DashboardAppServicePlan -l centralindia --is-linux --sku F1
+
+// Create webapp
+az webapp create -g DashboardApp -p DashboardAppServicePlan -n patient-dashboard-web-app -i dashboardappregistry.azurecr.io/dashboard-app:latest
