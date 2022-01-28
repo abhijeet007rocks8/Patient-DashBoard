@@ -11,4 +11,9 @@ az acr build --registry DashboardAppRegistry --resource-group DashboardApp --ima
 az appservice plan create -g DashboardApp -n DashboardAppServicePlan -l centralindia --is-linux --sku F1
 
 // Create webapp
-az webapp create -g DashboardApp -p DashboardAppServicePlan -n patient-dashboard-web-app -i dashboardappregistry.azurecr.io/dashboard-app:latest
+az webapp create -g DashboardApp -p DashboardAppServicePlan -n patient-dashboard-webapp -i dashboardappregistry.azurecr.io/dashboard-app:latest
+
+
+az webapp create -g DashboardApp -p DashboardServicePlan -n patient-dashboard -i dashboardappregistry.azurecr.io/dashboard-app:latest
+
+B1 plan works for streamlit
