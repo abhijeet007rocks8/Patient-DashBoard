@@ -28,6 +28,7 @@ The project takes a patient id as references and tallies it across all the datas
 (Patient allergies)<br/>
 (Patient Conditions & Careplan)<br/>
 (Patient implants(if any))<br/>
+(Medical Records(if any))<br/>
 2-The DashBoard also shows locations of various medical stores in the area on a map.
 
 ## What we learned

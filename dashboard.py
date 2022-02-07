@@ -50,6 +50,12 @@ def load_suppliers():
 	return(details)
 suppliers=load_suppliers()
 
+@st.cache(allow_output_mutation=True)
+def load_medication():
+	details=pd.read_csv("medications.csv")
+	return (details)
+patient_medications=load_medication()
+
 #-------------------------------------------------DATA IMPORTING END----------------------------------------------------------------#
 
 
@@ -110,7 +116,8 @@ for i in patient_details["GENDER"]:
 	
 def main_display():
 	st.sidebar.subheader("Patient Details to Display:")
-	choice = st.sidebar.radio('', ('Personal Details', 'Patient Obsevations', 'Patient Allergies' , 'Patient Conditions' , 'Monitoring Devices'))
+	choice = st.sidebar.radio('', ('Personal Details', 'Patient Obsevations', 'Patient Allergies' , 'Patient Conditions' , 'Monitoring Devices', 'Medication Records'))
+	
 	if(choice=='Personal Details'):
 		st.write("\n")
 		st.subheader("Personal Details of the Patient-")
@@ -192,6 +199,33 @@ def main_display():
 		if found==0:
 			st.write("No Implants/Devices for the Patient.")
 
+	
+	if(choice=='Medication Records'):
+		patient_medications['STOP']= patient_medications['STOP'].apply(str)
+		st.write("\n")
+		st.subheader("Medication Records of the Patient")
+		index=0
+		found=0
+		reading=0
+		for i in patient_medications["PATIENT"]:
+			if patient_id==i:
+				found=1
+				st.markdown("#### Record:"+str(reading+1))
+				reading+=1
+				st.write("Medicine Name: "+ patient_medications["DESCRIPTION"][index])
+				if(patient_medications["REASONCODE"][index]>0):
+					st.write("Reason prescribed: "+ str(patient_medications["REASONDESCRIPTION"][index]))
+				st.write("Start Date: "+ patient_medications["START"][index][:10])
+				if(patient_medications["STOP"][index]!="nan"):
+					st.write("Stop Date: "+ str(patient_medications["STOP"][index][:10]))
+				else:
+					st.write("Stop Date: Ongoing")
+			index=index+1
+		if found==0:
+			st.write("No Medication Records found for the Patient.")
+
+
+
 #------------------------------------------------------------------------------------------------------------#
 
 
@@ -213,7 +247,7 @@ if(patient_id!=""):
 else:
 	st.markdown("#### Patient ID: ")
 	st.markdown("#### Patient Name: ")
-	choice = st.sidebar.radio('', ('Personal Details', 'Patient Obsevations', 'Patient Allergies' , 'Patient Conditions' , 'Monitoring Devices'))
+	choice = st.sidebar.radio('', ('Personal Details', 'Patient Obsevations', 'Patient Allergies' , 'Patient Conditions' , 'Monitoring Devices', 'Medication Records'))
 	if(choice=='Personal Details'):
 		st.write("\n")
 		st.subheader("Personal Details of the Patient-")
@@ -233,6 +267,10 @@ else:
 	if(choice=='Monitoring Devices'):
 		st.write("\n")
 		st.subheader("Monitoring devices/Implants for the Patient-")
+
+	if(choice=='Medication Records'):
+		st.write("\n")
+		st.subheader("Medication Records of the Patient-")
 	
 st.sidebar.subheader("Medical Suppliers Loacations")
 if st.sidebar.checkbox("Show", True, key='0'):
