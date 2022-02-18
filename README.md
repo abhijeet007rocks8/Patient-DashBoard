@@ -1,4 +1,4 @@
-# Patient-DashBoard <a href="https://patient-dashboard.azurewebsites.net/" target="_blank">(Azure Deployment)</a>
+# Patient-DashBoard 
 ### MLH HackAPAC-2021 Best Hack for your Community Winner <a href="https://devpost.com/software/patient-dashboard">DEVPOST</a>
 An interactive dashboard using Python(Streamlit, numpy , pandas) to easily collect and show all the details of a aptient saved across various datasets in one place.<br>
 This can help the patients and their caretakers to easily acces the data regarding patient ad take better care of them.<br>
